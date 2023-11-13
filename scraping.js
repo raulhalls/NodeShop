@@ -1,6 +1,6 @@
 const pup = require('puppeteer');
-const cherio = require('cherio');
-const request = require('request');
+//const cherio = require('cherio');
+//const request = require('request');
 
 const list = [];
 const sleep = ms => new Promise(res => setTimeout(res, ms));
@@ -56,6 +56,10 @@ let c = 1;
     ]);
 
     console.log('pagina 2 de compras');
+
+    await linksLoop();
+
+
 
 
     (async () => {
