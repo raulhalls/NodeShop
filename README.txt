@@ -2,6 +2,8 @@ para rodar o servidor nã utilize o comando node (insira aqui o nome do arquivo)
 
 use o comando do nodemon ./(nome do arquivo com extenção);
 
+comando aumentar RAM: node --max-old-space-size=8096 scraping.js
+
 
 
 

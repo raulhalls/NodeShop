@@ -1,6 +1,5 @@
-const pup = require('puppeteer');
-//const cherio = require('cherio');
-//const request = require('request');
+import pup from 'puppeteer';
+
 
 const list = [];
 const sleep = ms => new Promise(res => setTimeout(res, ms));
@@ -34,11 +33,15 @@ let c = 1;
         for(const link of links){
 
             await page.goto(link);
-            //await page.waitForSelector();
             const title = await page.$eval('#productTitle' , element => element.innerText);
-            // const linkImg = await page.$eval('Seletor' , element => element.innerText);
+            const imageElement = await page.waitForSelector('#imgTagWrapperId > img');
+            const imageProp = await imageElement.getProperty("src");
+            const imageSrc = await imageProp.jsonValue();
+            
             const obj = {};
+            obj.id = c;
             obj.title = title;
+            obj.src = imageSrc;
             list.push(obj);
             c++;
             console.log('pagina' , c);
@@ -46,25 +49,32 @@ let c = 1;
         console.log(list);
     }
     
-    await linksLoop(); 
+    while (true) {
+        await linksLoop(); 
 
-    await page.goto(urlLivros); 
+        await page.goto(urlLivros); 
 
-    await Promise.all([
-      page.waitForNavigation(),
-      page.click('.s-pagination-next')
-    ]);
-
-    console.log('pagina 2 de compras');
-
-    await linksLoop();
+        await Promise.all([
+          page.waitForNavigation(),
+          page.click('.s-pagination-next')
+        ]);
 
 
+        console.log('proxima página');
 
+        await linksLoop();
+
+    }
+/*
+    for (const obj of list) { 
+        console.log(`Título: ${obj.title}, Fonte: ${obj.src}`);
+    }
 
     (async () => {
         await sleep(9000);
     })();
 
-    await browser.close();
+    await browser.close();*/
 })();
+
+export { list };
