@@ -10,6 +10,8 @@ npm install node
 
 npm install puppeteer
 
+baixar mysql server
+
 
 
 

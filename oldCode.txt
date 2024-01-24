@@ -1,25 +1,3 @@
-import mysql from 'mysql';
-import { list } from './scraping.js'; 
-import * as linksLoop from "./scraping.js";
-
-
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  port: 3308, 
-  password: '1234',
-  database: 'SCRAPPING'
-});
-
-connection.connect(function(err) {
-  if (err) {
-    console.error('Erro ao conectar: ' + err.stack);
-    return;
-  }
-
-  console.log('Conectado como id ' + connection.threadId);
-});
-
 async function insertData() {
   for (let item of list) {
     const query = 'INSERT INTO CARDS (id ,title, src) VALUES (?, ?, ?)';
@@ -37,7 +15,7 @@ async function insertData() {
   }
 }
 
-async function scrapeAndInsert() {
+/*async function scrapeAndInsert() {
   await new Promise(async (resolve, reject) => {
     await linksLoop();
     resolve();
@@ -53,5 +31,4 @@ async function scrapeAndInsert() {
 
     console.log('Conexão encerrada');
   });
-}
-
+}*/
