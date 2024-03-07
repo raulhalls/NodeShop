@@ -60,6 +60,7 @@ let c = 1;
           page.click('.s-pagination-next')
         ]);
 
+        insertdata();
 
         console.log('proxima página');
 
@@ -67,13 +68,6 @@ let c = 1;
 
     }
     
-/*
-
-    (async () => {
-        await sleep(9000);
-    })();
-
-    await browser.close();*/
 })();
 
 const connection = mysql.createConnection({
@@ -92,8 +86,25 @@ const connection = mysql.createConnection({
   
     console.log('Conectado como id ' + connection.threadId);
   });
+
+  function insertdata() {
+    list.forEach(objeto => {
+      const { id, title, src } = objeto;
+      const sql = 'INSERT INTO CARDS (id, title, src) VALUES (?, ?, ?)';
+      connection.query(sql, [id, title, src], (err, result) => {
+        if (err) {
+          console.error('Erro ao inserir objeto:', err);
+          return;
+        }
+        console.log('Objeto inserido com sucesso:', result);
+      });
+    });
+
+
+
+  }
   
-  async function insertData() {
+  /*async function insertData(list) {
     for (let item of list) {
       const query = 'INSERT INTO CARDS (id ,title, src) VALUES (?, ?, ?)';
       await new Promise((resolve, reject) => {
@@ -127,6 +138,6 @@ const connection = mysql.createConnection({
       console.log('Conexão encerrada');
     });
   }
-
+*/
 export { list };
 
